@@ -1,0 +1,25 @@
+.add-new-main {
+}
+.add-new-main .header {
+  display: flex;
+}
+.add-new-main .header h2 {
+  font-size: 22px;
+  margin-left: 10px !important;
+}
+
+.add-new-main .add-form-cont {
+  display: flex;
+  justify-content: center;
+}
+.add-new-main .add-form-cont .add-new-form {
+  width: 70%;
+}
+.add-new-main .add-form-cont .add-new-form .ant-checkbox-group-item {
+  margin: 8px 0;
+  margin-right: 10px;
+}
+
+.Save-Btn {
+  margin-top: 1rem;
+}

@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+/* Theme CSS */
+@import "./general.css";
+@import "./antd.css";
+@import "./Layout/VerticalLayout.css";
+@import "./Layout/HorizontalLayout.css";
+@import "./Layout/MainLayout.css";
+@import "./Layout/CustomizeLayout.css";
+@import "./Theme/theme.css";
+
+/* Components */
+@import "./components/table.css";
+
+/* Pages */
+@import "./Pages/Form.css";
+@import "./Pages/Home.css";
+@import "./Pages/librarians.css";
+@import "./Pages/AddNew.css";
+@import "./Pages/Readers.css";
+@import "./Pages/GeneralSettings.css";
+@import "./Pages/ViewBook.css";

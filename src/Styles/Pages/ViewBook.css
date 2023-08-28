@@ -1,0 +1,68 @@
+.View-book .Carousal-div {
+  width: 60% !important;
+  display: flex !important;
+  height: 300px;
+  margin: 0 auto;
+}
+.View-book .Carousal-div > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.View-book .Profile-pic {
+  height: 120px;
+}
+.View-book .info-sec {
+  width: 100%;
+  margin-top: 3rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.View-book .info-sec .item {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+}
+.View-book .info-sec .item h4,
+.View-book .info-sec .link-item h4,
+.View-book .Desc h4 {
+  font-size: 16px;
+  font-weight: bolder;
+  margin-right: 15px;
+}
+.View-book .info-sec .item p {
+  font-size: 18px;
+}
+.View-book .info-sec .item .Green {
+  color: green !important;
+}
+.View-book .info-sec .item .Red {
+  color: red !important;
+}
+.View-book .info-sec .item .Hover:hover {
+  color: rgb(67, 67, 255) !important;
+  cursor: pointer;
+}
+.View-book .link-item {
+  width: 100%;
+  margin-top: 10px;
+}
+.View-book .link-item h4 {
+  margin-bottom: 10px;
+}
+.View-book .link-item li {
+  list-style: decimal;
+  font-size: 18px;
+}
+.View-book .Desc {
+  margin-top: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}

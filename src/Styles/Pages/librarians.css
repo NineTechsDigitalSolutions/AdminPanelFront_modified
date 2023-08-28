@@ -1,0 +1,18 @@
+.librarians {
+}
+.green {
+  color: green;
+  font-weight: bold;
+}
+.red {
+  color: red;
+  font-weight: bold;
+}
+.librarians .top-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.librarians .top-btns div button {
+  margin: 0 5px;
+}

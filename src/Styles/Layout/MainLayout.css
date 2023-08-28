@@ -1,0 +1,22 @@
+.main-layout {
+  position: relative;
+}
+.customize {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  bottom: 50%;
+}
+.sider-selector.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  background: transparent !important;
+  color: #fff !important;
+  border: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+}
+.sider-selector.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  box-shadow: none;
+}

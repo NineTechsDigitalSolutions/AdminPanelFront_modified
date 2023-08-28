@@ -1,0 +1,39 @@
+.home-main {
+}
+.ant-statistic-title {
+  color: #fff;
+  font-size: larger;
+  font-weight: bold;
+}
+.stats {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+}
+
+.stats span {
+  color: #fff;
+}
+.stats span svg {
+  /* color: #3e722a; */
+}
+.home-main .stat-1 {
+  background-color: #707cd2;
+}
+
+.stat-2 {
+  background-color: #ac3f21;
+}
+.stat-3 {
+  background-color: #17b978;
+}
+.home-main .stat-4 {
+  background-color: #2f89fc;
+}
+.home-main .stat-4 div {
+  display: flex;
+  justify-content: space-between;
+}
+.home-main .stat-4 div span {
+  font-weight: bold;
+}

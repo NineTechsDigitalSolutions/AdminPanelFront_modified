@@ -1,0 +1,14 @@
+.general-settings {
+}
+.general-settings
+  .ant-radio-group-solid
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background: var(--sidebar-bg-color);
+  border: none !important;
+}
+.general-settings .ant-radio-button-wrapper {
+  background: transparent;
+  margin: 10px;
+  color: var(--text-color);
+  border: none;
+}

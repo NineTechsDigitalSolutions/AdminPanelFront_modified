@@ -1,0 +1,155 @@
+* {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--body-bg-color);
+}
+.ant-layout-content {
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+  /* height: auto; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+tr {
+  color: var(--text-color) !important;
+  margin: 0;
+}
+.pa-24 {
+  padding: 24px;
+}
+.mtb-16 {
+  margin: 16px 0;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mx-auto {
+  margin: 0 auto;
+}
+.icon-size-22 {
+  font-size: 22px !important;
+  margin-top: 3px !important;
+}
+.select-sider-icon {
+  font-size: 22px !important;
+  margin-top: 6px !important;
+}
+.ant-menu.ant-menu-inline-collapsed > .ant-menu-item .anticon {
+  margin: -3px;
+}
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.white-card {
+  /* background: #fff; */
+  background: var(-body-bg-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.transparent-card {
+  background: transparent;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  border-radius: 10px;
+}
+.profile-card {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-card .inner-card {
+  background: var(-body-bg-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ProfileForm {
+  width: 100%;
+}
+.bg-yellow {
+  background-color: #ffd615;
+}
+.bg-red {
+  background-color: #ff5959;
+}
+.color-red {
+  color: #ff5959 !important;
+}
+.bg-green {
+  background-color: #17b978;
+}
+.color-green {
+  color: #17b978;
+}
+.bg-blue {
+  background-color: #3d5af1;
+}
+.black {
+  color: #000 !important;
+}
+.white {
+  color: #fff;
+}
+.justify-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ml-left-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+.ml-left-flex button:nth-child(2) {
+  margin-left: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--body-bg-color);
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--sidebar-bg-color);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.swal2-title {
+  color: rgb(34, 34, 34) !important;
+}
+/* .swal2-popup {
+  background: var(--sidebar-bg-color);
+} */

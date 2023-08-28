@@ -1,0 +1,22 @@
+.customize-layout h4,
+.customize-layout p {
+  color: rgb(26, 25, 25) !important;
+}
+.customize-layout div {
+  margin: 10px 0;
+}
+.customize-layout .colors-container {
+  display: flex;
+}
+.customize-layout .colors-container span {
+  height: 25px;
+  width: 25px;
+  margin: 0 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid black;
+}
+.customize-layout .colors-container .selectedColor {
+  border: 4px solid rgba(47, 46, 46, 0.952);
+  opacity: 0.7;
+}

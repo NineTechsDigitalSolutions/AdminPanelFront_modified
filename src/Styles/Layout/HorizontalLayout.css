@@ -1,0 +1,14 @@
+.h-layout {
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar .navbar-logo {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: large;
+  font-weight: bold;
+}

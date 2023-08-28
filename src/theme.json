@@ -1,0 +1,11 @@
+{
+  "primary-color": "#482ff7",
+  "secondary-color": "#19A057",
+  "text-black": "#262627",
+  "box-shadow": "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
+
+  "table-row-hover-bg": "transparent",
+  "table-selected-row-bg": "transparent",
+  "table-body-selected-sort-bg": "transparent",
+  "table-selected-row-hover-bg": "transparent"
+}

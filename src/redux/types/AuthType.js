@@ -1,0 +1,2 @@
+export const LOGIN_DETAILS = "LOGIN_DETAILS";
+export const SELECTED_LIBRARY = "SELECTED_LIBRARY";

@@ -1,0 +1,2 @@
+export const GET_ALL_AUTHORS = "GET_ALL_AUTHORS";
+export const AUTHOR_SEARCH = "AUTHOR_SEARCH";

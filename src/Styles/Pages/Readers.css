@@ -1,0 +1,9 @@
+.readers-main {
+}
+.readers-main .select-lib {
+  display: flex;
+  align-items: center;
+}
+.readers-main .select-lib p {
+  margin-right: 10px;
+}

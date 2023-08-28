@@ -1,0 +1,19 @@
+.table-search-inp {
+  display: flex;
+  justify-content: flex-end;
+}
+.table-search-inp .ant-input-affix-wrapper {
+  width: 30%;
+  margin-bottom: 10px;
+}
+.actions-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  cursor: pointer;
+}
+.actions-buttons span {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
