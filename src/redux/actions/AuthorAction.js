@@ -5,7 +5,7 @@ import * as productTypes from "../types/AuthorType";
 export const createAuthor = (payload, history) => async (dispatch) => {
   console.log(payload);
   try {
-    const res = await publicAPI.post(`/author/create`, payload);
+    const res = await privateAPI.post(`/author/create`, payload);
     console.log(res.data);
     if (res) {
       swal("", res.data.message, "success").then(() =>
@@ -22,7 +22,7 @@ export const createAuthor = (payload, history) => async (dispatch) => {
 export const UpdateAuthor = (payload, history) => async (dispatch) => {
   console.log(payload);
   try {
-    const res = await publicAPI.post(`/author/update`, payload);
+    const res = await privateAPI.post(`/author/update`, payload);
     console.log(res.data);
     if (res) {
       swal("", res.data.message, "success").then(() =>
@@ -37,8 +37,9 @@ export const UpdateAuthor = (payload, history) => async (dispatch) => {
 };
 
 export const GetAllAuthors = () => async (dispatch) => {
+  console.log("Here", privateAPI.defaults.headers.common.Authorization);
   try {
-    const res = await publicAPI.get(`/author/get-all`);
+    const res = await privateAPI.get(`/author/get-all`);
     if (res) {
       console.log(res.data);
       dispatch({
@@ -54,7 +55,7 @@ export const GetAllAuthors = () => async (dispatch) => {
 export const ChangeAuthorStatus = (payload) => async (dispatch) => {
   console.log(payload);
   try {
-    const res = await publicAPI.get(`/author/toggle-status/${payload}`);
+    const res = await privateAPI.get(`/author/toggle-status/${payload}`);
     if (res) {
       console.log(res.data);
       dispatch(GetAllAuthors());
@@ -67,7 +68,7 @@ export const ChangeAuthorStatus = (payload) => async (dispatch) => {
 export const SearchAuthor = (payload) => async (dispatch) => {
   console.log(payload);
   try {
-    const res = await publicAPI.post(`/author/search`, payload);
+    const res = await privateAPI.post(`/author/search`, payload);
     if (res) {
       console.log(res.data);
       dispatch({

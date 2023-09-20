@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Radio, Button, Typography } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
-import CKEditor from "ckeditor4-react";
+// import CKEditor from "ckeditor4-react";
+import { CKEditor } from 'ckeditor4-react';
+
 // import ReactHtmlParser from "react-html-parser";
 
 import { GetGeneralSetting, createSettingContent } from "../../redux";
