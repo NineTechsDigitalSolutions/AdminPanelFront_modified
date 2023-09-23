@@ -2,6 +2,7 @@ import swal from "sweetalert";
 import { notification } from "antd";
 import { publicAPI, privateAPI } from "../../API";
 import * as productTypes from "../types/AuthType";
+import { attachToken } from '../../API/index';
 
 export const userLogin = (payload, history) => async (dispatch) => {
   try {
@@ -27,6 +28,7 @@ export const userLogin = (payload, history) => async (dispatch) => {
         duration: 3,
       });
       history.replace("/");
+      attachToken();
       // swal("", res.data.message, "success").then(() => {
       // });
     }

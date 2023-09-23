@@ -5,7 +5,7 @@ import moment from "moment";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
-import { publicAPI } from "../../API/index";
+import { publicAPI,privateAPI } from "../../API/index";
 import Layout from "./../../Layout/LayoutMain";
 
 const ViewAuthor = () => {
@@ -14,7 +14,7 @@ const ViewAuthor = () => {
   const history = useHistory();
 
   useEffect(async () => {
-    const res = await publicAPI.get(`/author/get-author/${id}`);
+    const res = await privateAPI.get(`/author/get-author/${id}`);
     if (res) {
       console.log(res.data);
       setAuthorData(res.data);

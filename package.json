@@ -11,7 +11,7 @@
     "antd": "^4.16.9",
     "antd-img-crop": "^4.2.0",
     "axios": "^0.21.1",
-    "ckeditor4-react": "^1.4.2",
+    "ckeditor4-react": "^2.0.0",
     "craco-less": "^1.18.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -27,7 +27,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider; craco start",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && craco start",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider; craco build",
     "test": "export NODE_OPTIONS=--openssl-legacy-provider; craco test",
     "eject": "react-scripts eject"
