@@ -33,6 +33,7 @@ export const UpdateCategory = (payload, catType) => async (dispatch) => {
 };
 
 export const GetAllCategory = (payload) => async (dispatch) => {
+  console.log("Payload1",payload)
   try {
     const res = await publicAPI.get(`/category/get-all?type=${payload.type}`);
     if (res) {
@@ -78,10 +79,11 @@ export const GetCategoriesByID = (payload) => async (dispatch) => {
   console.log(payload);
   try {
     const res = await publicAPI.get(`/category/get-all-categories`);
+    //console.log("Navo123",res);
     if (res) {
       console.log(res.data);
       dispatch({
-        type: productTypes.GET_ALL_CATEGORY_BY_ID,
+        type: productTypes.GET_ALL_CATEGORY_BY_ID, //here name
         payload: res.data,
       });
     }
