@@ -28,6 +28,7 @@ const Authors = () => {
   useEffect(() => {
     let tempArr = [];
     AllAuthors?.map((data, ind) => {
+      //console.log("Image : ",data.profilePic)
       tempArr.push({
         key: data._id,
         srno: ind + 1,

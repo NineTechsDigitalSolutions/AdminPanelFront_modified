@@ -16,6 +16,8 @@ const Categories = () => {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
 
+  console.log("ggggggggggggggg",AllCategory)
+
   useEffect(() => {
     dispatch(GetAllCategory({ type: "" }));
     dispatch(GetMaterial());

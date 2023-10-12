@@ -31,7 +31,8 @@ import {
   GetAllAuthors,
   GetSubCategoriesByID,
   UploadImage,
-  GetCategoriesByMaterial,
+  //GetCategoriesByMaterial,
+  GetCategoriesByID,
   GetAllBooks,
 } from "../../redux";
 import Layout from "./../../Layout/LayoutMain";
@@ -66,13 +67,19 @@ const AddNewBook = () => {
   const [DateSelect, setDateSelect] = useState("");
   const [CategorySelect, setCategorySelect] = useState("");
 
+  console.log("StateNavod",state);
+
   const CategoryOption = useSelector(
-    (state) => state.CategoryReducer.AllCategoriesByMaterial
+    //(state) => state.CategoryReducer.AllCategoriesByMaterial
+    (state) => state.CategoryReducer.ALLCategoriesById
   );
+
   const SUbCategoryOption = useSelector(
     (state) => state.CategoryReducer.ALLSubCategoriesById
   );
+  console.log("MiNCate",SUbCategoryOption)
   const AuthorOption = useSelector((state) => state.AuthorReducer.AllAuthors);
+
   const LibrarianOption = useSelector(
     (state) => state.LibrarianReducer.Librarian
   );
@@ -84,7 +91,8 @@ const AddNewBook = () => {
   useEffect(() => {
     dispatch(getLibrarians());
     dispatch(GetAllAuthors());
-    dispatch(GetCategoriesByMaterial(MaterialId));
+    dispatch(GetCategoriesByID());
+    //dispatch(GetCategoriesByMaterial(MaterialId));
     dispatch(
       GetAllBooks(
         SelectedLibrary && {
@@ -351,16 +359,20 @@ const AddNewBook = () => {
                 label="Category"
                 rules={[{ required: true, message: "Category Is Required" }]}
                 requiredMark={"optional"}
-                initialValue={state?.category._id}
+                //initialValue={state?.category._id}
                 //   rules={[{ required: true ,message: "Email Is Required" }]}
               >
                 <Select
                   allowClear
                   placeholder="select category"
                   onChange={(e, key) => onCategoryChnage(e, key)}
+                  // onChange={(value) =>{
+                  //   console.log("ggggg",value)
+                  //   onCategoryChnage(value)
+                  // }} 
                 >
                   {CategoryOption?.map((data) => (
-                    <Option value={data._id} key={data.name}>
+                    <Option value={data.material} key={data.name}>
                       {" "}
                       {data.name}{" "}
                     </Option>

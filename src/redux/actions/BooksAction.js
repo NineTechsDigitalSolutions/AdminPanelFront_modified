@@ -41,7 +41,7 @@ export const GetAllBooks = (payload) => async (dispatch) => {
   try {
     const res = await publicAPI.post(`/book/get-by-library-admin`, payload);
     if (res) {
-      console.log(res.data);
+      console.log("Admin get All",res.data);
       dispatch({
         type: productTypes.GET_ALL_BOOKS,
         payload: res.data,
@@ -55,7 +55,10 @@ export const GetAllBooks = (payload) => async (dispatch) => {
 export const GetAllBooksByType = (payload) => async (dispatch) => {
   console.log(payload);
   try {
-    const res = await publicAPI.post(`/book/get-by-type`, payload);
+    //const res = await publicAPI.post(`/book/get-by-type`, payload);
+    const res = await publicAPI.post(`/book/get-all`, payload);
+    console.log("Ddfdf123",res.data);
+
     if (res) {
       console.log(res.data);
       dispatch({

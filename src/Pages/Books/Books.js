@@ -31,7 +31,7 @@ const Books = () => {
   );
   const MaterialOption = useSelector((state) => state.CategoryReducer.Material);
 
-  console.log("MaterialOption", MaterialOption);
+  // console.log("MaterialOption", MaterialOption);
   useEffect(() => {
     dispatch(GetMaterial());
     dispatch(
@@ -44,17 +44,19 @@ const Books = () => {
   }, [SelectedLibrary]);
 
   useEffect(() => {
-    console.log(AllBooks);
+    console.log("fjdfhdj",AllBooks);
     let tempArr = [];
     AllBooks?.map((item, i) => {
+      // console.log("ItemId123",item.category)
       tempArr.push({
         key: item._id,
         srno: i + 1,
         image: <Image height={80} width={100} src={item?.frontCover} />,
         name: item.name,
         author: item.author.name,
-        category: item.category.name,
-        type: item.category.material.name,
+        //category: item.category.name,
+        category: item.category?.name || "N/A",
+        type: item.subCategory[0].name,
         library: item.viewInLibrary ? (
           <Switch
             defaultChecked
@@ -114,6 +116,7 @@ const Books = () => {
       });
     });
     setData(tempArr && tempArr);
+    console.log("Array",tempArr)
   }, [AllBooks]);
 
   const columns = [
