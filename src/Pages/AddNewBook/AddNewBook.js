@@ -31,6 +31,7 @@ import {
   GetAllAuthors,
   GetSubCategoriesByID,
   UploadImage,
+  UploadFile,
   //GetCategoriesByMaterial,
   GetCategoriesByID,
   GetAllBooks,
@@ -158,7 +159,7 @@ const AddNewBook = () => {
       bookMp3UrlFemale: AudioBookFemale?.length > 0 ? AudioBookFemale?.[0] : "",
       id: state ? state?._id : "",
     };
-    console.log("payload", payload);
+    //console.log("payload frontcover : ", payload.frontCover);
     console.log("values", values);
 
     state
@@ -525,29 +526,43 @@ const AddNewBook = () => {
                   </Form.List>
                 </Form.Item>
               }
+              
+
               <Form.Item
                 name="images3"
                 label="Add Front Cover"
-                // rules={[{ required: true }]}
               >
                 <div>
                   <ImgCrop
                     aspect={1 / 1.48}
                     onModalOk={async (obj) => {
-                      obj.status = "success";
-                      if (obj.status !== "removed") {
-                        setUploadLoading("front");
-                        let payload = new FormData();
-                        payload.append("pictures", obj);
-                        const url = await dispatch(UploadImage(payload));
-                        setUploadLoading(null);
-                        setFrontCover([
-                          {
-                            url: url,
-                          },
-                        ]);
+                      try {
+                        obj.status = "success";
+                        if (obj.status !== "removed") {
+                          setUploadLoading("front");
+                          let payload = new FormData();
+                          payload.append("pictures", obj);
+                    
+                          const response = await dispatch(UploadImage(payload));
+
+                          if (response && response.awsUrl) {
+                            setUploadLoading(null);
+                            setFrontCover([
+                              {
+                                url: response.awsUrl,
+                              },
+                            ]);
+                          } else {
+                            console.error("Invalid response from UploadImage:", response);
+                            // Handle the case where the response does not contain a valid URL
+                          }
+                        }
+                      } catch (error) {
+                        console.error("Error while uploading front cover:", error);
+                        // Handle the error, e.g., show an error message to the user
                       }
                     }}
+                    
                   >
                     <Upload
                       listType="picture-card"
@@ -573,30 +588,53 @@ const AddNewBook = () => {
                   </ImgCrop>
                 </div>
               </Form.Item>
+
+
+
+
               <Form.Item
                 name="images"
                 label="Add Images Of First Five Pages Of Books"
               >
-                <div>
+                
+
+                  <div>
                   <ImgCrop
                     aspect={1 / 1.48}
                     onModalOk={async (obj) => {
-                      obj.status = "success";
-                      if (obj.status !== "removed") {
-                        setUploadLoading("five");
-                        let payload = new FormData();
-                        payload.append("pictures", obj);
-                        const url = await dispatch(UploadImage(payload));
-                        setUploadLoading(null);
-                        setFileList1([
-                          ...fileList1,
-                          {
-                            url: url,
-                          },
-                        ]);
+                      try {
+                        obj.status = "success";
+                        if (obj.status !== "removed") {
+                          setUploadLoading("five");
+                          let payload = new FormData();
+                          payload.append("pictures", obj);
+                    
+                          const response = await dispatch(UploadImage(payload));
+
+                          if (response && response.awsUrl) {
+                            setUploadLoading(null);
+                            setFileList1([
+                              ...fileList1,
+                              {
+                                url: response.awsUrl,
+                              },
+                            ]);
+                          } else {
+                            console.error("Invalid response from UploadImage:", response);
+                            // Handle the case where the response does not contain a valid URL
+                          }
+                        }
+                      } catch (error) {
+                        console.error("Error while uploading front cover:", error);
+                        // Handle the error, e.g., show an error message to the user
                       }
                     }}
+                    
                   >
+
+                  
+
+
                     <Upload
                       listType="picture-card"
                       fileList={fileList1}
@@ -630,25 +668,41 @@ const AddNewBook = () => {
                 label="Add Back Cover of Book"
                 // rules={[{ required: true }]}
               >
-                <div>
+
+
+                  <div>
                   <ImgCrop
                     aspect={1 / 1.48}
                     onModalOk={async (obj) => {
-                      obj.status = "success";
-                      if (obj !== "removed") {
-                        setUploadLoading("back");
-                        let payload = new FormData();
-                        payload.append("pictures", obj);
-                        const url = await dispatch(UploadImage(payload));
-                        setUploadLoading(null);
-                        setBackCover([
-                          {
-                            url: url,
-                          },
-                        ]);
+                      try {
+                        obj.status = "success";
+                        if (obj.status !== "removed") {
+                          setUploadLoading("back");
+                          let payload = new FormData();
+                          payload.append("pictures", obj);
+                    
+                          const response = await dispatch(UploadImage(payload));
+                    
+                          if (response && response.awsUrl) {
+                            setUploadLoading(null);
+                            setBackCover([
+                              {
+                                url: response.awsUrl,
+                              },
+                            ]);
+                          } else {
+                            console.error("Invalid response from UploadImage:", response);
+                            // Handle the case where the response does not contain a valid URL
+                          }
+                        }
+                      } catch (error) {
+                        console.error("Error while uploading front cover:", error);
+                        // Handle the error, e.g., show an error message to the user
                       }
                     }}
+                    
                   >
+                  
                     <Upload
                       listType="picture-card"
                       fileList={BackCover}
@@ -678,7 +732,7 @@ const AddNewBook = () => {
                 label="Upload Book(PDF) Format"
                 // rules={[{ required: true }]}
               >
-                <div>
+                 <div>
                   <Upload
                     listType="picture-card"
                     fileList={BookPdf}
@@ -733,19 +787,19 @@ const AddNewBook = () => {
                           CategorySelect !== "" &&
                           DateSelect !== "" &&
                           AuthorSelect !== ""
-                            ? await dispatch(UploadImage(payload))
+                            ? await dispatch(UploadFile(payload))
                             : notification.error({
                                 message: "Form Fill",
                                 description:
                                   "Fill All fields before Upload Book",
                                 duration: 5,
                               });
-                        // console.log("url", url);
+
                         setUploadLoading(null);
                         url &&
                           setBookPdf([
                             {
-                              url: url,
+                              url: url.awsUrl,
                             },
                           ]);
                       }
@@ -765,7 +819,10 @@ const AddNewBook = () => {
                       : uploadButton}
                   </Upload>
                 </div>
+
+
               </Form.Item>
+
               <Form.Item label="Upload Book(EPUB) Format">
                 <div>
                   <Upload
@@ -822,7 +879,7 @@ const AddNewBook = () => {
                           CategorySelect !== "" &&
                           DateSelect !== "" &&
                           AuthorSelect !== ""
-                            ? await dispatch(UploadImage(payload))
+                            ? await dispatch(UploadFile(payload))
                             : notification.error({
                                 message: "Form Fill",
                                 description:
@@ -833,7 +890,7 @@ const AddNewBook = () => {
                         url &&
                           setBookEPUB([
                             {
-                              url: url,
+                              url: url.awsUrl,
                             },
                           ]);
                       }
@@ -871,10 +928,10 @@ const AddNewBook = () => {
                         setUploadLoading("male");
                         let payload = new FormData();
                         payload.append("pictures", obj?.file?.originFileObj);
-                        const url = await dispatch(UploadImage(payload));
+                        const url = await dispatch(UploadFile(payload));
                         console.log("url", url);
                         setUploadLoading(null);
-                        setAudioBookMale([url]);
+                        setAudioBookMale([url.awsUrl]);
                       }}
                       accept="audio/*"
                       multiple={false}
@@ -922,10 +979,10 @@ const AddNewBook = () => {
                         setUploadLoading("female");
                         let payload = new FormData();
                         payload.append("pictures", obj?.file?.originFileObj);
-                        const url = await dispatch(UploadImage(payload));
+                        const url = await dispatch(UploadFile(payload));
                         setUploadLoading(null);
                         console.log("url", url);
-                        setAudioBookFemale([url]);
+                        setAudioBookFemale([url.awsUrl]);
                       }}
                       multiple={false}
                       maxCount={1}

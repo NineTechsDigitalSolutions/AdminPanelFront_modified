@@ -90,8 +90,24 @@ export const SelectedLibrary = (payload) => async (dispatch) => {
 };
 
 export const UploadImage = (payload) => async (dispatch) => {
+  //console.log("1111",payload)
   try {
     const res = await publicAPI.post(`/auth/upload-image`, payload);
+    if (res) {
+      // console.log(res.data?.url);
+      return res.data;
+    }
+  } catch (err) {
+    console.log(err?.response?.data?.message);
+    swal("", err?.response?.data?.message || "Server Error", "error");
+  }
+};
+
+
+export const UploadFile = (payload) => async (dispatch) => {
+  //console.log("file",payload)
+  try {
+    const res = await publicAPI.post(`/auth/upload-file`, payload);
     if (res) {
       // console.log(res.data?.url);
       return res.data;

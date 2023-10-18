@@ -4,7 +4,7 @@ import * as productTypes from "../types/BooksType";
 
 export const createBook = (payload, history) => async (dispatch) => {
   try {
-    console.log("hit");
+    console.log("payload : ", payload);
     const res = await publicAPI.post(`/book/create`, payload);
     if (res) {
       console.log(res.data);
