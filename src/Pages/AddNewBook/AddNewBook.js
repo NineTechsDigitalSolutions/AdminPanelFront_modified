@@ -226,8 +226,6 @@ const AddNewBook = () => {
               <Form.Item
                 name="name"
                 label="Name"
-                // validateStatus={"success"}
-                // hasFeedback
                 rules={[{ required: true, message: "Book Name Is Required" }]}
                 requiredMark={"optional"}
                 initialValue={state?.name}
@@ -258,10 +256,6 @@ const AddNewBook = () => {
               <Form.Item
                 name="translatedBy"
                 label="Translated By"
-                // rules={[
-                //   { required: true, message: "Translated By Is Required" },
-                // ]}
-                // requiredMark={"optional"}
                 initialValue={state?.translatedBy}
               >
                 <Select allowClear placeholder="select Author">
@@ -271,17 +265,6 @@ const AddNewBook = () => {
                 </Select>
               </Form.Item>
 
-              {/* <Form.Item
-                name="translatedBy"
-                label="Translated By"
-                rules={[
-                  { required: true, message: "Translated By Is Required" },
-                ]}
-                requiredMark={"optional"}
-                initialValue={state?.translatedBy}
-              >
-                <Input />
-              </Form.Item> */}
               <Form.Item
                 name="publisher"
                 label="Publisher"
@@ -312,6 +295,35 @@ const AddNewBook = () => {
                   }}
                 />
               </Form.Item>
+              <Form.Item
+                name="first_publisher"
+                label="First Publisher"
+                
+                requiredMark={"optional"}
+                initialValue={state?.first_publisher}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                name="first_printYear"
+                label="First Printed Year"
+               
+                requiredMark={"optional"}
+                initialValue={state && moment(state?.first_printYear)}
+              >
+                <DatePicker
+                  defaultValue={state && moment(state?.first_printYear)}
+                  style={{ width: "100%" }}
+                  picker="year"
+                  onChange={(date, dateString) => {
+                    setDateSelect(dateString);
+                    console.log("dateString", dateString);
+                  }}
+                />
+              </Form.Item>
+
+
               <Form.Item
                 name="ISBN"
                 label="ISBN"
