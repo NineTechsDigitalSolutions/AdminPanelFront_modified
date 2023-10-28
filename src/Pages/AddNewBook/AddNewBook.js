@@ -42,7 +42,9 @@ import Layout from "./../../Layout/LayoutMain";
 import moment from "moment";
 
 const { Step } = Steps;
-let values1,values2;
+let values1,values2,values3;
+
+
 
 const AddNewBook = () => {
   let RandomNumber = Math.floor(Math.random() * 1000);
@@ -70,6 +72,8 @@ const AddNewBook = () => {
   const [BookTEXT, setBookTEXT] = useState([]);
   const [AudioBookMale, setAudioBookMale] = useState([]);
   const [AudioBookFemale, setAudioBookFemale] = useState([]);
+  //const [AudioBookDramatic, setAudioBookDramatic] = useState([]);
+  
 
   const BookType = sessionStorage.getItem("bookType");
   const MaterialId = sessionStorage.getItem("MaterialId");
@@ -78,7 +82,7 @@ const AddNewBook = () => {
   const [DateSelect, setDateSelect] = useState("");
   const [CategorySelect, setCategorySelect] = useState("");
 
-  console.log("StateNavod Machn",state);
+  
 
   
 
@@ -86,28 +90,62 @@ const AddNewBook = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
 
+  const [chapters, setChapters] = useState([{ chapter_number_epub: [], chapter_name_epub: [] , BookEPUB: [] }]);
+  const [chaptersTxt, setChaptersTxt] = useState([{ chapter_number_txt: [], chapter_name_txt: [] , BookTEXT: [] }]);
+  const [chaptersAudio, setChaptersAudio] = useState([{ AudioBookMale: [], AudioBookFemale: [] , AudioBookDramatic: [] }]);
+
   const handleStep1Finish = () => {
 
      values1 = form.getFieldsValue();
       setCurrentStep(1);
-
-      //console.log("Form 11111 : ",values1)
-   
   };
 
   const handleStep2Finish = () => {
 
      values2 = form.getFieldsValue();
       setCurrentStep(2);
-
-      //console.log("Form 2222 : ",values2)
     
   };
 
-  // const handleStep3Finish = () => {
-  //     // All steps are completed, you can submit the form data here
-  //     message.success("Form submitted successfully!");
-  // };
+  const handleAddChapter = () => {
+    setChapters([...chapters, {}]);
+  };
+
+  const handleAddChapterTxt = () => {
+    setChaptersTxt([...chaptersTxt, {}]);
+  };
+
+  const handleAddChapterAudio = () => {
+    setChaptersAudio([...chaptersAudio, {}]);
+  };
+
+  const handleRemoveChapter = (index) => {
+    const updatedChapters = [...chapters];
+    updatedChapters.splice(index, 1);
+    setChapters(updatedChapters);
+
+  };
+
+  const handleRemoveChapterTxt = (index) => {
+    const updatedChapters = [...chaptersTxt];
+    updatedChapters.splice(index, 1);
+    setChaptersTxt(updatedChapters);
+
+  };
+
+  const handleRemoveChapterAudio = (index) => {
+    const updatedChapters = [...chaptersAudio];
+    updatedChapters.splice(index, 1);
+    setChaptersAudio(updatedChapters);
+
+  };
+
+  console.log("Chapters123 : ",chapters)
+
+  
+
+
+ 
 
 
   //fdfdfdffffffffffffffffffffffffffffffffffffffffffffff
@@ -173,9 +211,8 @@ const AddNewBook = () => {
   //const onFinish = async (values) => {
   const onFinish = async () => {
 
-    console.log("Inside final value1 : ",values1)
     
-    const values3 = form.getFieldsValue();
+    values3 = form.getFieldsValue();
 
     const values = {
       ...values1,
@@ -183,7 +220,40 @@ const AddNewBook = () => {
       ...values3,
     };
 
-    console.log("Form values machn : ",values)
+
+    const chapterNumbersEpub = [];
+    const chapterNamesEpub = [];
+    const fileListEpubChapter = [] ;
+
+    const chapterNumbersTxt = [];
+    const chapterNamesTxt = [];
+    const fileListTxtChapter = [] ;
+
+    const chapterAudioMale = [];
+    const chapterAudioFemale = [];
+    const chapterAudioDramatic = [] ;
+
+    chapters.map((chapter, index) => {
+      chapterNumbersEpub.push(values2[`chapter_number_epub[${index}]`]);
+      chapterNamesEpub.push(values2[`chapter_name_epub[${index}]`]);
+      fileListEpubChapter.push(chapters[0].BookEPUB[index]);
+    });
+
+    chaptersTxt.map((chapter, index) => {
+      chapterNumbersTxt.push(values2[`chapter_number_text[${index}]`]);
+      chapterNamesTxt.push(values2[`chapter_name_text[${index}]`]);
+      fileListTxtChapter.push(chaptersTxt[0].BookTEXT[index]);
+    });
+
+    chaptersAudio.map((chapter, index) => {
+      chapterAudioMale.push(chaptersAudio[0].AudioBookMale[index]);
+      chapterAudioFemale.push(chaptersAudio[0].AudioBookFemale[index]);
+      chapterAudioDramatic.push(chaptersAudio[0].AudioBookDramatic[index]);
+    });
+
+
+    console.log("Chapter Audio Male : ",chapterAudioMale)
+    
 
     setLoading(true);
     let previousSeriesLinks = [];
@@ -200,6 +270,19 @@ const AddNewBook = () => {
 
     const payload = {
       ...values,
+      chapter_number_epub: chapterNumbersEpub,
+      chapter_name_epub: chapterNamesEpub,
+      fileListEpubChapter: fileListEpubChapter,
+
+      chapterNumbersTxt: chapterNumbersTxt,
+      chapterNamesTxt: chapterNamesTxt,
+      fileListTxtChapter: fileListTxtChapter,
+
+      chapterAudioMale: chapterAudioMale,
+      chapterAudioFemale: chapterAudioFemale,
+      chapterAudioDramatic: chapterAudioDramatic,
+
+
       printYear: String(date),
       subCategory: JSON.stringify(values.subCategory ? values.subCategory : []),
       previousSeries: isSeries,
@@ -271,6 +354,7 @@ const AddNewBook = () => {
   const onPhysicalBookAdd = (values) => {
     console.log("Received values of form:", values);
   };
+
 
 
   //hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
@@ -993,6 +1077,33 @@ const AddNewBook = () => {
 
               </Form.Item>
 
+              <Form.Item
+                name="publisher_epub"
+                label="Publisher(EPUB)"
+                // rules={[{ required: true, message: "Book Name Is Required" }]}
+                requiredMark={"optional"}
+                initialValue={state?.publisher_epub}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                  name="epub_published_year"
+                  label="EPUB published Year"
+                
+                  requiredMark={"optional"}
+                  initialValue={state && moment(state?.epub_published_year)}
+                >
+                  <DatePicker
+                    defaultValue={state && moment(state?.epub_published_year)}
+                    style={{ width: "100%" }}
+                    picker="year"
+                    onChange={(date, dateString) => {
+                      setDateSelect(dateString);
+                      console.log("dateString", dateString);
+                    }}
+                  />
+              </Form.Item>
+
               <Form.Item label="Upload Book(EPUB) Format">
                 <div>
                   <Upload
@@ -1082,7 +1193,157 @@ const AddNewBook = () => {
                 </div>
               </Form.Item>
 
+              {chapters.map((chapter, index) => (
+                <div>
+                  <Form.Item
+                    name={`chapter_number_epub[${index}]`}
+                    label={`Chapter Number ${index + 1} (EPUB)`}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    name={`chapter_name_epub[${index}]`}
+                    label={`Chapter Name ${index + 1} (EPUB)`}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item label={`Upload Chapter(EPUB) ${index + 1}`}>
+                      <div key={index}>
+                        <Upload
+                          listType="picture-card"
+                          fileList={chapters[index]?.BookEPUB || []}
+                          onChange={async (obj) => {
+                            console.log(obj);
+                            if (obj.file.status !== 'removed') {
+                              let payload = new FormData();
+                              payload.append('pictures', obj.file.originFileObj);
+                              payload.append(
+                                "locationUrl",
+                                BookType === "E-Magazine"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/MG${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "E-Newspaper"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/EN${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "Audio Book"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/AD${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : `Library_Materials/${BookType}/${
+                                      AuthorSelect !== "" ? AuthorSelect : "author"
+                                    }/EN${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                              );
+                              // Your logic for generating the locationUrl here
+
+                              const url = CategorySelect && DateSelect && AuthorSelect
+                                ? await dispatch(UploadFile(payload))
+                                : notification.error({
+                                    message: 'Form Fill',
+                                    description: 'Fill All fields before Upload Book',
+                                    duration: 5,
+                                  });
+                              
+                              // Update the BookEPUB for the specific chapter
+                              setChapters((prevChapters) => {
+                                const updatedChapters = [...prevChapters];
+                                //updatedChapters[index].BookEPUB = url ? [{ url: url.awsUrl }] : [];
+                                if (updatedChapters.length > 0) {
+                                  updatedChapters[0].BookEPUB[index] = url ? [{ url: url.awsUrl }] : [];
+                                  //updatedChapters.BookEPUB[index] = url ? [{ url: url.awsUrl }] : [];
+                                }
+                                return updatedChapters;
+                              });
+                            }
+                          }}
+                          accept=".epub"
+                          multiple={false}
+                          //maxCount={1}
+                          onRemove={(file, fileList) => {
+                            setChapters((prevChapters) => {
+                              const updatedChapters = [...prevChapters];
+                              updatedChapters[index].BookEPUB = [];
+                              return updatedChapters;
+                            });
+                          }}
+                          customRequest={() => {}}
+                        >
+                          {chapters[index]?.BookEPUB?.length >= 1
+                            ? null
+                            : uploadButton}
+                        </Upload>
+                      </div>
+                    </Form.Item>
+
+    
+
+
+
+
+                  <Button type="link" onClick={() => handleRemoveChapter(index)}>
+                    Remove Chapter
+                  </Button>
+                </div>
+              ))}
+
+              <Form.Item>
+                <Button type="dashed" onClick={handleAddChapter}>
+                  Add Chapter
+                </Button>
+              </Form.Item>
+
               {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
+
+              <Form.Item
+                name="publisher_text"
+                label="Publisher(TEXT)"
+                // rules={[{ required: true, message: "Book Name Is Required" }]}
+                requiredMark={"optional"}
+                initialValue={state?.publisher_text}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                  name="text_published_year"
+                  label="TEXT published Year"
+                
+                  requiredMark={"optional"}
+                  initialValue={state && moment(state?.text_published_year)}
+                >
+                  <DatePicker
+                    defaultValue={state && moment(state?.text_published_year)}
+                    style={{ width: "100%" }}
+                    picker="year"
+                    onChange={(date, dateString) => {
+                      setDateSelect(dateString);
+                      console.log("dateString", dateString);
+                    }}
+                  />
+              </Form.Item>
 
               <Form.Item
                 label="Upload Book(TEXT) Format"
@@ -1179,6 +1440,130 @@ const AddNewBook = () => {
 
               </Form.Item>
 
+
+              {chaptersTxt.map((chapter, index) => (
+                <div key={index}>
+                  <Form.Item
+                    name={`chapter_number_text[${index}]`}
+                    label={`Chapter Number ${index + 1} (TEXT)`}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    name={`chapter_name_text[${index}]`}
+                    label={`Chapter Name ${index + 1} (TEXT)`}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item label={`Upload Chapter(TEXR) ${index + 1}`}>
+                      <div>
+                        <Upload
+                          listType="picture-card"
+                          fileList={chaptersTxt[index]?.BookTEXT || []}
+                          onChange={async (obj) => {
+                            console.log(obj);
+                            if (obj.file.status !== 'removed') {
+                              let payload = new FormData();
+                              payload.append('pictures', obj.file.originFileObj);
+                              payload.append(
+                                "locationUrl",
+                                BookType === "E-Magazine"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/MG${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "E-Newspaper"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/EN${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "Audio Book"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/AD${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : `Library_Materials/${BookType}/${
+                                      AuthorSelect !== "" ? AuthorSelect : "author"
+                                    }/EN${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                              );
+                              // Your logic for generating the locationUrl here
+
+                              const url = CategorySelect && DateSelect && AuthorSelect
+                                ? await dispatch(UploadFile(payload))
+                                : notification.error({
+                                    message: 'Form Fill',
+                                    description: 'Fill All fields before Upload Book',
+                                    duration: 5,
+                                  });
+                              
+                              // Update the BookEPUB for the specific chapter
+                              setChaptersTxt((prevChapters) => {
+                                const updatedChapters = [...prevChapters];
+                                //updatedChapters[index].BookEPUB = url ? [{ url: url.awsUrl }] : [];
+                                if (updatedChapters.length > 0) {
+                                  updatedChapters[0].BookTEXT[index] = url ? [{ url: url.awsUrl }] : [];
+                                  //updatedChapters.BookEPUB[index] = url ? [{ url: url.awsUrl }] : [];
+                                }
+                                return updatedChapters;
+                              });
+                            }
+                          }}
+                          accept="text/plain"
+                          multiple={false}
+                          //maxCount={1}
+                          onRemove={(file, fileList) => {
+                            setChaptersTxt((prevChapters) => {
+                              const updatedChapters = [...prevChapters];
+                              updatedChapters[index].BookTEXT = [];
+                              return updatedChapters;
+                            });
+                          }}
+                          customRequest={() => {}}
+                        >
+                          {chaptersTxt[index]?.BookTEXT?.length >= 1
+                            ? null
+                            : uploadButton}
+                        </Upload>
+                      </div>
+                    </Form.Item>
+
+    
+
+
+
+
+                  <Button type="link" onClick={() => handleRemoveChapterTxt(index)}>
+                    Remove Chapter
+                  </Button>
+                </div>
+              ))}
+
+              <Form.Item>
+                <Button type="dashed" onClick={handleAddChapterTxt}>
+                  Add Chapter
+                </Button>
+              </Form.Item>
+
               {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
 
               <div style={{ textAlign: 'center' }}>
@@ -1224,6 +1609,44 @@ const AddNewBook = () => {
                 scrollToFirstError={true}
                 //onFinish={handleStep1Finish}
               >
+
+              <Form.Item
+                name="format_type"
+                label="Format Type"
+                // rules={[{ required: true, message: "Book Name Is Required" }]}
+                requiredMark={"optional"}
+                initialValue={state?.format_type}
+              >
+                <Input />
+              </Form.Item>  
+
+              <Form.Item
+                  name="audio_published_year"
+                  label="Audio Published Year"
+                
+                  requiredMark={"optional"}
+                  initialValue={state && moment(state?.audio_published_year)}
+                >
+                  <DatePicker
+                    defaultValue={state && moment(state?.audio_published_year)}
+                    style={{ width: "100%" }}
+                    picker="year"
+                    onChange={(date, dateString) => {
+                      setDateSelect(dateString);
+                      console.log("dateString", dateString);
+                    }}
+                  />
+              </Form.Item>
+
+              <Form.Item
+                name="total_duration"
+                label="Total Duration"
+                // rules={[{ required: true, message: "Book Name Is Required" }]}
+                requiredMark={"optional"}
+                initialValue={state?.total_duration}
+              >
+                <Input />
+              </Form.Item> 
 
               <Form.Item
                 name="audioBookMalee"
@@ -1328,6 +1751,303 @@ const AddNewBook = () => {
                 )}
               </Form.Item>
 
+              {chaptersAudio.map((chapter, index) => (
+                <div key={index}>
+                  
+                  <Form.Item label={`Upload Chapter(Audio-Male) ${index + 1}`}>
+                      <div>
+                        <Upload
+                          listType="picture-card"
+                          fileList={chaptersAudio[index]?.AudioBookMale || []}
+                          onChange={async (obj) => {
+                            console.log(obj);
+                            if (obj.file.status !== 'removed') {
+                              let payload = new FormData();
+                              payload.append('pictures', obj.file.originFileObj);
+                              payload.append(
+                                "locationUrl",
+                                BookType === "E-Magazine"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/MG${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "E-Newspaper"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/EN${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "Audio Book"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/AD${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : `Library_Materials/${BookType}/${
+                                      AuthorSelect !== "" ? AuthorSelect : "author"
+                                    }/EN${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                              );
+                              // Your logic for generating the locationUrl here
+
+                              const url = CategorySelect && DateSelect && AuthorSelect
+                                ? await dispatch(UploadFile(payload))
+                                : notification.error({
+                                    message: 'Form Fill',
+                                    description: 'Fill All fields before Upload Book',
+                                    duration: 5,
+                                  });
+                              
+                              // Update the BookEPUB for the specific chapter
+                              setChaptersAudio((prevChapters) => {
+                                const updatedChapters = [...prevChapters];
+                                if (updatedChapters.length > 0) {
+                                  updatedChapters[0].AudioBookMale[index] = url ? [{ url: url.awsUrl }] : [];
+                                  //updatedChapters.AudioBookMale[index] = url ? [{ url: url.awsUrl }] : [];
+                                }
+                                return updatedChapters;
+                              });
+                            }
+                          }}
+                          accept="audio/*"
+                          multiple={false}
+                          //maxCount={1}
+                          onRemove={(file, fileList) => {
+                            setChaptersAudio((prevChapters) => {
+                              const updatedChapters = [...prevChapters];
+                              updatedChapters[index].AudioBookMale = [];
+                              return updatedChapters;
+                            });
+                          }}
+                          customRequest={() => {}}
+                        >
+                          {chaptersAudio[index]?.AudioBookMale?.length >= 1
+                            ? null
+                            : uploadButton}
+                        </Upload>
+                      </div>
+                    </Form.Item>
+
+
+                    <Form.Item label={`Upload Chapter(Audio-Female) ${index + 1}`}>
+                      <div>
+                        <Upload
+                          listType="picture-card"
+                          fileList={chaptersAudio[index]?.AudioBookFemale || []}
+                          onChange={async (obj) => {
+                            console.log(obj);
+                            if (obj.file.status !== 'removed') {
+                              let payload = new FormData();
+                              payload.append('pictures', obj.file.originFileObj);
+                              payload.append(
+                                "locationUrl",
+                                BookType === "E-Magazine"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/MG${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "E-Newspaper"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/EN${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "Audio Book"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/AD${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : `Library_Materials/${BookType}/${
+                                      AuthorSelect !== "" ? AuthorSelect : "author"
+                                    }/EN${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                              );
+                              // Your logic for generating the locationUrl here
+
+                              const url = CategorySelect && DateSelect && AuthorSelect
+                                ? await dispatch(UploadFile(payload))
+                                : notification.error({
+                                    message: 'Form Fill',
+                                    description: 'Fill All fields before Upload Book',
+                                    duration: 5,
+                                  });
+                              
+                              // Update the BookEPUB for the specific chapter
+                              setChaptersAudio((prevChapters) => {
+                                const updatedChapters = [...prevChapters];
+                                if (updatedChapters.length > 0) {
+                                  updatedChapters[0].AudioBookFemale[index] = url ? [{ url: url.awsUrl }] : [];
+                                }
+                                return updatedChapters;
+                              });
+                            }
+                          }}
+                          accept="audio/*"
+                          multiple={false}
+                          //maxCount={1}
+                          onRemove={(file, fileList) => {
+                            setChaptersAudio((prevChapters) => {
+                              const updatedChapters = [...prevChapters];
+                              updatedChapters[index].AudioBookFemale = [];
+                              return updatedChapters;
+                            });
+                          }}
+                          customRequest={() => {}}
+                        >
+                          {chaptersAudio[index]?.AudioBookFemale?.length >= 1
+                            ? null
+                            : uploadButton}
+                        </Upload>
+                      </div>
+                    </Form.Item>
+
+
+                    <Form.Item label={`Upload Chapter(Audio-Dramatic) ${index + 1}`}>
+                      <div>
+                        <Upload
+                          listType="picture-card"
+                          fileList={chaptersAudio[index]?.AudioBookDramatic || []}
+                          onChange={async (obj) => {
+                            console.log(obj);
+                            if (obj.file.status !== 'removed') {
+                              let payload = new FormData();
+                              payload.append('pictures', obj.file.originFileObj);
+                              payload.append(
+                                "locationUrl",
+                                BookType === "E-Magazine"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/MG${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "E-Newspaper"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/EN${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : BookType === "Audio Book"
+                                  ? `Library_Materials/${BookType}/${
+                                      DateSelect !== ""
+                                        ? DateSelect
+                                        : `${new Date().getFullYear()}`
+                                    }/AD${RandomNumber}_${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                                  : `Library_Materials/${BookType}/${
+                                      AuthorSelect !== "" ? AuthorSelect : "author"
+                                    }/EN${
+                                      CategorySelect !== ""
+                                        ? CategorySelect
+                                        : "category"
+                                    }_${obj?.file?.name}`
+                              );
+                              // Your logic for generating the locationUrl here
+
+                              const url = CategorySelect && DateSelect && AuthorSelect
+                                ? await dispatch(UploadFile(payload))
+                                : notification.error({
+                                    message: 'Form Fill',
+                                    description: 'Fill All fields before Upload Book',
+                                    duration: 5,
+                                  });
+                              
+                              // Update the BookEPUB for the specific chapter
+                              setChaptersAudio((prevChapters) => {
+                                const updatedChapters = [...prevChapters];
+                                if (updatedChapters.length > 0) {
+                                  updatedChapters[0].AudioBookDramatic[index] = url ? [{ url: url.awsUrl }] : [];
+                                }
+                                return updatedChapters;
+                              });
+                            }
+                          }}
+                          accept="audio/*"
+                          multiple={false}
+                          //maxCount={1}
+                          onRemove={(file, fileList) => {
+                            setChaptersAudio((prevChapters) => {
+                              const updatedChapters = [...prevChapters];
+                              updatedChapters[index].AudioBookDramatic = [];
+                              return updatedChapters;
+                            });
+                          }}
+                          customRequest={() => {}}
+                        >
+                          {chaptersAudio[index]?.AudioBookDramatic?.length >= 1
+                            ? null
+                            : uploadButton}
+                        </Upload>
+                      </div>
+                    </Form.Item>
+
+
+
+
+                  
+
+
+                    
+    
+
+
+
+
+                  <Button type="link" onClick={() => handleRemoveChapterAudio(index)}>
+                    Remove Chapter
+                  </Button>
+                </div>
+              ))}
+
+              <Form.Item>
+                <Button type="dashed" onClick={handleAddChapterAudio}>
+                  Add Chapter
+                </Button>
+              </Form.Item>
+
               <Form.Item>
                 <Button loading={Loading} type="primary" htmlType="submit">
                   {state ? "Update" : "Add"}
@@ -1419,26 +2139,6 @@ const AddNewBook = () => {
   //     )
   //   }
   // ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-
-  
-
-
 
 
 
