@@ -49,6 +49,21 @@ export const getLibrarians = () => async (dispatch) => {
   }
 };
 
+export const getLibrarians1 = () => async (dispatch) => {
+  try {
+    const res = await publicAPI.get(`/librarian/get-all`);
+    if (res) {
+      console.log(res.data);
+      dispatch({
+        type: productTypes.GET_ALL_LIBRARIANS,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    console.log(err?.response?.data?.message);
+  }
+};
+
 export const GetAllLibrarians = (payload) => async (dispatch) => {
   try {
     const res = await publicAPI.post(`/librarian/get-by-library`, payload);
