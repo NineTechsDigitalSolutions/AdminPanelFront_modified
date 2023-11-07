@@ -13,7 +13,8 @@ import {
 import Layout from "../../Layout/LayoutMain";
 import DataTable from "../../Components/Table/DataTable";
 import {
-  GetAllLibrarians,
+  //GetAllLibrarians,
+  getLibrarians1,
   ChangeLibrarianStatus,
   ChangeLibrarianByStatus,
   DeleteLibrarian,
@@ -33,12 +34,15 @@ const Librarians = () => {
 
   const onStatusFilter = (status) => {
     status === "All" &&
+      // dispatch(
+      //   GetAllLibrarians(
+      //     SelectedLibrary && {
+      //       libraries: SelectedLibrary,
+      //     }
+      //   )
+      // );
       dispatch(
-        GetAllLibrarians(
-          SelectedLibrary && {
-            libraries: SelectedLibrary,
-          }
-        )
+        getLibrarians1()
       );
     status === "Active" &&
       dispatch(
@@ -56,15 +60,21 @@ const Librarians = () => {
       );
   };
 
+  // useEffect(() => {
+  //   dispatch(
+  //     GetAllLibrarians(
+  //       SelectedLibrary && {
+  //         libraries: SelectedLibrary,
+  //       }
+  //     )
+  //   );
+  // }, [SelectedLibrary]);
+
   useEffect(() => {
     dispatch(
-      GetAllLibrarians(
-        SelectedLibrary && {
-          libraries: SelectedLibrary,
-        }
-      )
+      getLibrarians1()
     );
-  }, [SelectedLibrary]);
+  },[]);
 
   useEffect(() => {
     let tempArr = [];
