@@ -34,10 +34,14 @@ const Categories = () => {
       tempArr.push({
         key: data._id,
         srno: index + 1,
+        // main:
+        //   data.categoryType === "sub"
+        //     ? data.mainCat.material.name
+        //     : data.material.name,
         main:
-          data.categoryType === "sub"
-            ? data.mainCat.material.name
-            : data.material.name,
+            data.categoryType === "sub"
+              ? data.mainCat?.material?.name || "N/A"
+              : data.material?.name || "N/A",
         category: (
           <Tree
             onSelect={onSelect}
